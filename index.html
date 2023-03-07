@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            textarea {
+                width: 100%;
+                height: 200px;
+                padding: 10px;
+                box-sizing: border-box;
+                border-radius: 5px;
+                border: 2px solid #ccc;
+                font-size: 16px;
+                resize: none;
+            }
+
+            #result {
+                margin-top: 40px;
+                width: 50%;
+                height: 250px;
+                padding: 24px;
+                background-color: aliceblue;
+                color: #0d0d0d;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>URL extractor</h1>
+        <textarea id="inputField"></textarea><br>
+        <label for="searchField">Woord om te behouden:</label>
+        <input type="text" id="searchField"><br>
+        <button onclick="handleSubmit()">Extract</button>
+        <button onclick="pasteFromClipboard()">Paste from clipboard</button><br>
+        <div id="result"></div>
+        <script>
+            function extractUrls(text, searchWord) {
+                const urls = [];
+                const regex = /((?:https?|ftp):\/\/[^\s]+)/gi; // regex voor URL's
+                let match;
+
+                while ((match = regex.exec(text)) !== null) {
+                    const url = match[1];
+                    if (url.includes(searchWord)) {
+                        urls.push(url); // URL's toevoegen aan de array
+                    }
+                }
+
+                return urls;
+            }
+        </script>
+        <script>
+            function handleSubmit() {
+                const input = document.getElementById("inputField").value;
+                const searchWord = document.getElementById("searchField").value;
+                const urls = extractUrls(input, searchWord);
+
+                // De gevonden URL's weergeven
+                const result = document.getElementById("result");
+                result.innerHTML = urls.join("<br>");
+            }
+
+            function pasteFromClipboard() {
+                const textarea = document.getElementById("inputField");
+                navigator.clipboard.readText()
+                    .then(text => {
+                        textarea.value = text;
+                    })
+                    .catch(error => {
+
+        </script>
+    </body>
+</html>
